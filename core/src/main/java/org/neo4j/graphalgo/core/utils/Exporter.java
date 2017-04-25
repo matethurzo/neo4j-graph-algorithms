@@ -32,11 +32,11 @@ public abstract class Exporter<T> {
         try (Transaction tx = api.beginTx();
              Statement statement = bridge.get()) {
             int propertyId = statement
-                    .tokenWriteOperations()
+                    .dataWriteOperations()
                     .propertyKeyGetOrCreateForName(propertyName);
             tx.success();
             return propertyId;
-        } catch (IllegalTokenNameException e) {
+        } catch (IllegalTokenNameException | InvalidTransactionTypeKernelException e) {
             throw new RuntimeException(e);
         }
     }
